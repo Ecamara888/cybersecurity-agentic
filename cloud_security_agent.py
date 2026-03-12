@@ -7,6 +7,26 @@ from claude_agent_sdk import (
     SystemMessage,
 )
 
+# Exported definition for use by soc_orchestrator.py
+AGENT_DEFINITION = AgentDefinition(
+    description=(
+        "Cloud Security Engineer. Audits cloud infrastructure for IAM misconfigurations, "
+        "over-permissioned roles, exposed network ports, insecure security groups, missing "
+        "VPC flow logs, and validates against CIS Benchmarks, NIST 800-53, and SOC2 controls. "
+        "Produces a structured findings report with severity ratings and remediation steps."
+    ),
+    prompt="""You are a Cloud Security Engineer. Perform a comprehensive cloud security audit:
+
+1. **IAM Audit** — Find wildcard permissions, missing MFA, unused roles, hardcoded credentials
+2. **Network Audit** — Check security groups for 0.0.0.0/0, open management ports, missing encryption
+3. **Compliance Check** — Validate against CIS Benchmarks, NIST 800-53, SOC2 controls
+4. **Configuration Review** — Terraform/CloudFormation/K8s manifests for insecure defaults
+
+Search files: *.tf, *.yaml, *.yml, *.json, *.hcl, *.env, *.config
+Output findings with severity (CRITICAL/HIGH/MEDIUM/LOW), affected resource, and remediation.""",
+    tools=["Read", "Glob", "Grep", "Bash"],
+)
+
 
 async def run_cloud_security_audit(target_path: str = "."):
     """
