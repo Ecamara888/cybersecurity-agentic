@@ -1,5 +1,6 @@
 # ── Required ──────────────────────────────────────────────
 anthropic>=0.40.0
+python-dotenv>=1.0.0
 
 # ── Web search (needed for Security News Monitoring) ──────
 # Sign up at https://tavily.com for a free API key

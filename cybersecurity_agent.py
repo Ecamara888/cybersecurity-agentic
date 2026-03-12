@@ -13,11 +13,11 @@ A professional SOC analyst + threat intelligence assistant with five core capabi
 SETUP
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Required:
-    export ANTHROPIC_API_KEY=sk-ant-...
+Required — create a .env file in this directory:
+    ANTHROPIC_API_KEY=sk-ant-...
 
 Web search (needed for news monitoring):
-    export TAVILY_API_KEY=tvly-...
+    TAVILY_API_KEY=tvly-...
     (Get a free key at https://tavily.com)
 
 Gmail + Google Docs (optional):
@@ -44,6 +44,13 @@ import datetime
 import urllib.request
 import urllib.error
 from typing import Any
+
+# Load .env file if present (works on Windows, macOS, Linux)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not installed; fall back to environment variables
 
 import anthropic
 
